@@ -1,2 +1,2 @@
 # dnuz
-Download&amp;unzip with correct non utf8 paths&amp;filenames
+Download&amp;unzip&amp;fix non utf8 paths/filenames
