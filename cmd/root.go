@@ -42,6 +42,7 @@ var (
 	nonUtf8EncName string
 	outEncName     string
 	outPath        string
+	silentParam    bool
 	decoder        transform.Transformer
 	encoder        transform.Transformer
 )
@@ -153,8 +154,12 @@ var RootCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		fmt.Println("Unzipped:\n" + strings.Join(files, "\n"))
+		silent, _ := cmd.Flags().GetBool("silent")
+		if silent {
+			fmt.Printf("Unzipped %v files\n", len(files))
+		} else {
+			fmt.Println("Unzipped:\n" + strings.Join(files, "\n"))
+		}
 	},
 }
 
@@ -182,6 +187,7 @@ func init() {
 	RootCmd.PersistentFlags().StringVar(&outPath, "out-path", "", "Output path")
 	RootCmd.PersistentFlags().StringVar(&nonUtf8EncName, "nonUtf8-enc", "", "Encoding name for nonUTF8 filenames")
 	RootCmd.PersistentFlags().StringVar(&outEncName, "out-enc", "", "Encoding name for filenames")
+	RootCmd.Flags().BoolP("silent", "s", false, "Do silent")
 }
 
 // initConfig reads in config file and ENV variables if set.
